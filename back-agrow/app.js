@@ -8,6 +8,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const ProductInstance = require("./models/ProductInstance");
 const Product = require("./models/Product");
+const StageInstance = require("./models/StageInstance");
+const Stage = require("./models/Stage");
+const Report = require("./models/Report");
+const Datapoint = require("./models/Datapoint");
+const Crop = require("./models/Crop");
+const Sensor = require("./models/Sensor");
+const DataType = require("./models/DataType");
+const sequelize = require("lib/sequelize")
 
 var app = express();
 
@@ -25,10 +33,119 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 async function associateModels() {
-    ProductInstance.belongsTo(Product)
-    Product.hasMany(ProductInstance)
+    ProductInstance.belongsTo(Product, {foreignKey: {allowNull: false}})
+    Product.hasMany(ProductInstance, {foreignKey: {allowNull: false}})
 
+    ProductInstance.belongsTo(StageInstance, {
+        foreignKey:{
+            name:"lastStage",
+            allowNull: false
+        }
+    })
+    StageInstance.hasMany(ProductInstance, {
+        foreignKey:{
+            name:"lastStage",
+            allowNull: false
+        }
+    })
 
+    StageInstance.belongsTo(StageInstance, {
+        foreignKey:{
+            name:"nextStage",
+        }
+    })
+    StageInstance.hasOne(StageInstance, {
+        foreignKey:{
+            name:"nextStage",
+        }
+    })
+
+    StageInstance.belongsTo(Stage, {
+        foreignKey:{
+            name:"stageTemplate",
+        }
+    })
+    Stage.hasMany(StageInstance, {
+        foreignKey:{
+            name:"stageTemplate",
+        }
+    })
+
+    Report.belongsTo(StageInstance, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+    StageInstance.hasMany(Report, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+
+    Datapoint.belongsTo(StageInstance, {
+        foreignKey:{
+            allowNull: true
+        }
+    })
+    StageInstance.hasMany(Datapoint, {
+        foreignKey:{
+            allowNull: true
+        }
+    })
+
+    Stage.belongsTo(Crop, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+    Crop.hasMany(Stage, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+
+    Sensor.belongsTo(Stage, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+    Stage.hasMany(Sensor, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+
+    Datapoint.belongsTo(Sensor, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+    Sensor.hasMany(Datapoint, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+
+    Datapoint.belongsTo(DataType, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+    DataType.hasMany(Datapoint, {
+        foreignKey:{
+            allowNull: false
+        }
+    })
+
+    await ProductInstance.sync()
+    await Product.sync()
+    await StageInstance.sync()
+    await Stage.sync()
+    await Report.sync()
+    await Datapoint.sync()
+    await Crop.sync()
+    await Sensor.sync()
+    await DataType.sync()
 
     await sequelize.sync()
 }
