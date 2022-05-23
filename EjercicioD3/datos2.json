@@ -1,0 +1,38 @@
+[
+  {
+    "country": "Afghanistan",
+    "population": "31889923",
+    "lifeexpectancy": "43.8",
+    "purchasingpower": "974.58"
+  },
+  {
+    "country": "Albania",
+    "population": "3600523",
+    "lifeexpectancy": "76.4",
+    "purchasingpower": "5937.03"
+  },
+  {
+    "country": "Algeria",
+    "population": "33333216",
+    "lifeexpectancy": "72.3",
+    "purchasingpower": "6223.37"
+  },
+  {
+    "country": "Angola",
+    "population": "12420476",
+    "lifeexpectancy": "42.7",
+    "purchasingpower": "4797.23"
+  },
+  {
+    "country": "Argentina",
+    "population": "40301927",
+    "lifeexpectancy": "75.3",
+    "purchasingpower": "12779.38"
+  },
+  {
+    "country": "Australia",
+    "population": "204341763",
+    "lifeexpectancy": "81.2",
+    "purchasingpower": "34435.37"
+  }
+]
