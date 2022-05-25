@@ -1,39 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Link, Route, Router, Switch} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
 import LandingPage from "./Components/LandingPage";
+import Alert from "./Components/Alert";
+import Stages from "./Components/Stages";
 
 function App() {
-  return (
-    <div className="App h-100">
-        <nav className="w-100 py-1">
-            <div className="row row-cols-4">
-                <div className="col"><Link to="/stages">Stages</Link> </div>
-                <div className="col"><Link to="/sensors">Sensors</Link></div>
-                <div className="col"><Link to="/reports">Reports</Link></div>
-                <div className="col"><Link to="/products">Products</Link></div>
+    const [alerts, setAlerts] = useState([])
+    const renderAlerts = () => {
+        return alerts.map(alert =>
+            <Alert level={alert.level} key={alert.level + alert.msg} msg={alert.msg} alerts={alerts}
+                   setAlerts={setAlerts}/>)
+    }
+
+    const sendAlert = (level, msg) => {
+        setAlerts([...alerts, {level, msg}])
+    }
+
+    return (
+        <div className="App h-100">
+
+            <nav className="w-100 py-1">
+                <div className="row row-cols-4">
+                    <div className="col"><Link to="/stages">Stages</Link></div>
+                    <div className="col"><Link to="/sensors">Sensors</Link></div>
+                    <div className="col"><Link to="/reports">Reports</Link></div>
+                    <div className="col"><Link to="/products">Products</Link></div>
+                </div>
+            </nav>
+            <div className="alertList d-flex flex-column mx-3">
+                {renderAlerts()}
             </div>
-        </nav>
-        <Switch>
-            <Route path={"/stages"}>
-                <LandingPage/>
-            </Route>
-            <Route path={"/sensors"}>
-                <LandingPage/>
-            </Route>
-            <Route path={"/reports"}>
-                <LandingPage/>
-            </Route>
-            <Route path={"/products"}>
-                <LandingPage/>
-            </Route>
-            <Route path={"/"}>
-                <LandingPage/>
-            </Route>
-        </Switch>
-    </div>
-  );
+            <Switch>
+                <Route path="/stages">
+                    <Stages/>
+                </Route>
+                <Route path="/sensors">
+                    <LandingPage/>
+                </Route>
+                <Route path="/reports">
+                    <LandingPage/>
+                </Route>
+                <Route path="/products">
+                    <LandingPage/>
+                </Route>
+                <Route exact path="/">
+                    <LandingPage/>
+                </Route>
+            </Switch>
+        </div>
+    );
 }
 
 export default App;

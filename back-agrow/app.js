@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var stagesRouter = require('./routes/stages');
 const ProductInstance = require("./models/ProductInstance");
 const Product = require("./models/Product");
 const StageInstance = require("./models/StageInstance");
@@ -15,7 +16,8 @@ const Datapoint = require("./models/Datapoint");
 const Crop = require("./models/Crop");
 const Sensor = require("./models/Sensor");
 const DataType = require("./models/DataType");
-const sequelize = require("lib/sequelize")
+const sequelize = require("./lib/sequelize")
+const cors = require("cors")
 
 var app = express();
 
@@ -25,12 +27,18 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/users', usersRouter);
+//TODO Cambiar routers
+app.use('/stages', stagesRouter);
+app.use('/sensors', usersRouter);
+app.use('/reports', usersRouter);
+app.use('/products', usersRouter);
 
 async function associateModels() {
     ProductInstance.belongsTo(Product, {foreignKey: {allowNull: false}})

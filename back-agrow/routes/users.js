@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.status(500).send('TOCA CAMBIAR EL ROUTER PARA ESTA URL EN EL BACK');
 });
 
 module.exports = router;
