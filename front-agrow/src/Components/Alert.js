@@ -1,6 +1,9 @@
 
 import {useEffect} from "react";
 
+/**
+ * Componente de alerta
+ */
 const Alert = ({level, msg, alerts, setAlerts}) => {
 
     const deleteSelf = () => {

@@ -7,6 +7,7 @@ import Alert from "./Components/Alert";
 import Stages from "./Components/Stages";
 
 function App() {
+    // Cosas para mostrar alertas del app
     const [alerts, setAlerts] = useState([])
     const renderAlerts = () => {
         return alerts.map(alert =>
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/stages">
                     <Stages sendAlert={sendAlert}/>
                 </Route>
+                {/*TODO cambiar estos componentes*/}
                 <Route path="/sensors">
                     <LandingPage/>
                 </Route>
