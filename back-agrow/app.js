@@ -13,7 +13,6 @@ const StageInstance = require("./models/StageInstance");
 const Stage = require("./models/Stage");
 const Report = require("./models/Report");
 const Datapoint = require("./models/Datapoint");
-const Crop = require("./models/Crop");
 const Sensor = require("./models/Sensor");
 const DataType = require("./models/DataType");
 const sequelize = require("./lib/sequelize")
@@ -32,7 +31,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 //TODO Cambiar routers
 app.use('/stages', stagesRouter);
@@ -101,16 +99,7 @@ async function associateModels() {
         }
     })
 
-    Stage.belongsTo(Crop, {
-        foreignKey:{
-            allowNull: false
-        }
-    })
-    Crop.hasMany(Stage, {
-        foreignKey:{
-            allowNull: false
-        }
-    })
+
 
     Sensor.belongsTo(Stage, {
         foreignKey:{
@@ -151,7 +140,6 @@ async function associateModels() {
     await Stage.sync()
     await Report.sync()
     await Datapoint.sync()
-    await Crop.sync()
     await Sensor.sync()
     await DataType.sync()
 

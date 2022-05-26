@@ -15,8 +15,8 @@ router.get('/', function (req, res, next) {
 /* POST stages listing. */
 router.post('/', async function (req, res, next) {
     try{
+        console.log("Se creo etapa: " + JSON.stringify(req.body))
         const stage = await Stage.create(req.body)
-        console.log("Se creo etapa: " + JSON.stringify(stage))
         const stages = Stage.findAll()
         res.send(stages)
     }catch (e) {

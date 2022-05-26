@@ -2,7 +2,7 @@ const {Sequelize} = require("sequelize");
 
 const sequelize = new Sequelize("database", "", "", {
     dialect: "sqlite",
-    storage: "./database/database.sqlite",
+    storage: "./back-agrow/database/database.sqlite",
 });
 
 sequelize.authenticate().then(() => {

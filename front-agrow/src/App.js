@@ -13,7 +13,11 @@ function App() {
             <Alert level={alert.level} key={alert.level + alert.msg} msg={alert.msg} alerts={alerts}
                    setAlerts={setAlerts}/>)
     }
-
+    /**
+     *  Funcion para mostrar una alerta
+     * @param {'alert-primary' | 'alert-secondary' | 'alert-success' | 'alert-danger' | 'alert-warning' | 'alert-info'} level - Alert level
+     * @param msg
+     */
     const sendAlert = (level, msg) => {
         setAlerts([...alerts, {level, msg}])
     }
@@ -34,7 +38,7 @@ function App() {
             </div>
             <Switch>
                 <Route path="/stages">
-                    <Stages/>
+                    <Stages sendAlert={sendAlert}/>
                 </Route>
                 <Route path="/sensors">
                     <LandingPage/>
