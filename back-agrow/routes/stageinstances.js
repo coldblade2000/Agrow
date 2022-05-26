@@ -1,15 +1,16 @@
 var express = require('express');
-const Stage = require("../models/Stage");
-const stageinstanceRouter = require("./stageinstances")
-var router = express.Router();
+const StageInstance = require("../models/StageInstance");
+var router = express.Router({mergeParams:true});
 
 /* GET stages listing. */
 router.get('/', function (req, res, next) {
-    Stage.findAll().then((stages)=>{
+    StageInstance.findAll({
+        where: {stageId:req.params.id}
+    }).then((stages)=>{
         res.send(stages)
     }).catch((e)=>{
         console.error(e)
-        res.status(500).send("ERROR: No se pudo conseguir todas las etapas")
+        res.status(500).send("ERROR: No se pudo conseguir todas las instancias de etapas")
     })
 });
 
@@ -54,9 +55,5 @@ router.delete("/:id", (req, res) => {
         else res.status(404).send({message: `Etapa de ID ${req.params.id} no se encontro`});
     });
 });
-
-//STAGE INSTANCES
-
-router.use("/:stageId/stageinstance", stageinstanceRouter)
 
 module.exports = router;
